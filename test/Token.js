@@ -8,10 +8,14 @@ const tokens = (n) => {
 }
 
 describe("Token", () => {
-  let token;
+  let token, accounts, deployer;
+
   beforeEach(async () => {
     const Token = await ethers.getContractFactory('Token');
     token = await Token.deploy("DAPP Univer", "DAPP", "1000000");
+
+    accounts = await ethers.getSigners();
+    deployer = accounts[0];
   })
 
   describe('Deployment', () => {
@@ -35,6 +39,11 @@ describe("Token", () => {
     it("has correct total supply", async () => {
       // const value = ethers.utils.parseUnits('1000000', 'ether');
       expect(await token.totalSupply()).to.equal(totalSupply);
+    })
+
+    it("assigns total supply to deployer", async () => {
+      console.log('Deployer: ', deployer.address)
+      expect(await token.balanceOf(deployer.address)).to.equal(totalSupply);
     })
   })
   
