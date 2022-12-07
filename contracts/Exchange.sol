@@ -10,7 +10,7 @@ contract Exchange {
   mapping (address => mapping (address => uint256)) public tokens;
   mapping (uint256 => _Order) public orders;
   uint256 public orderCount;
-  mapping (uint256 => bool) public orderCancelled; // true or false
+  mapping (uint256 => bool) public orderCancelled;
   mapping (uint256 => bool) public orderFilled;
 
   event Deposit(
