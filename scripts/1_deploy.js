@@ -5,7 +5,6 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const { ethers } = require("hardhat");
-const hre = require("hardhat");
 
 async function main() {
   console.log('Preparing deployment...')
@@ -39,6 +38,6 @@ async function main() {
 main()
   .then(() => process.exit(0))
   .catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
+    console.error(error);
+    process.exitCode = 1;
 });
