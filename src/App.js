@@ -6,7 +6,8 @@ import {
   loadProvider,
   loadNetwork,
   loadAccount,
-  loadToken
+  loadTokens,
+  loadExchange
 } from './store/interactions';
 
 function App() {
@@ -14,17 +15,22 @@ function App() {
   const dispatch = useDispatch();
 
   const loadBlockChainData = async () => {
-    const account = await loadAccount(dispatch);
-    console.log('First account: ', account);
-    
+
     // Connect ethers to blockchain
     const provider = loadProvider(dispatch);
+    // Fetch current network's chainId (e.g. hardhat: 31337, kovan: 42)
     const chainId = await loadNetwork(provider, dispatch);
-    
-    // Token smart contract
-    await loadToken(provider, config[chainId].DApp.address, dispatch)
-    // const symbol = await token.symbol();
-    // console.log('Symbol: ', symbol)
+    // Fetch current account & balance from Metamsk
+    const account = await loadAccount(provider, dispatch);
+    console.log('First account: ', account);
+    // Load token smart contract
+    const DApp = config[chainId].DApp;
+    const mETH = config[chainId].mETH;
+    await loadTokens(provider, [DApp.address, mETH.address], dispatch)
+
+    // Load exchange smart contract
+    const exchangeConfig = config[chainId].exchange;
+    await loadExchange(provider, exchangeConfig, dispatch);
   };
 
   useEffect(() => {
