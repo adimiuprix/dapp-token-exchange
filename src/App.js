@@ -10,6 +10,7 @@ import {
   loadExchange
 } from './store/interactions';
 import Navbar from './components/Navbar';
+import Markets from './components/Markets';
 
 function App() {
 
@@ -52,6 +53,7 @@ function App() {
       <Navbar />
       <main className='exchange grid'>
         <section className='exchange__section--left grid'>
+          <Markets />
         </section>
         <section className='exchange__section--right grid'>
 
